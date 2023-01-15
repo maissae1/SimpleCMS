@@ -1,8 +1,15 @@
 from django.shortcuts import render
+from posts.forms import LoginForm
 
 
 def index(request):
     return render(request, 'base.html')
 
 def login_view(request):
-    return render(request, 'login.html')
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+
+    else:
+        loginForm = LoginForm()
+
+    return render(request, 'login.html', {'form': loginForm})

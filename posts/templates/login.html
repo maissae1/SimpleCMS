@@ -3,14 +3,15 @@
 
 {% block content %}
 <div class="position-absolute start-50 top-50 translate-middle" style="width: 600px">
-    <form class="bg-white p-5 rounded-3">
+    <form method="POST" class="bg-white p-5 rounded-3">
+        {% csrf_token %}
         <div class="mb-3">
             <label class="form-label">Username</label>
-            <input type="text" class="form-control">
+            {{ form.username }}
         </div>
         <div class="mb-3">
             <label class="form-label">Password</label>
-            <input type="password" class="form-control">
+            {{ form.password }}
         </div>
         <div class="mb-3 form-check">
             <input type="checkbox" class="form-check-input">
