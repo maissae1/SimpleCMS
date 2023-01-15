@@ -7,7 +7,7 @@ def index(request):
 
 def login_view(request):
     if request.method == 'POST':
-        form = LoginForm(request.POST)
+        loginForm = LoginForm(request.POST)
 
     else:
         loginForm = LoginForm()
