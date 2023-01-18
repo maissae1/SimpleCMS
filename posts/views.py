@@ -5,7 +5,7 @@ from posts.forms import LoginForm
 
 @login_required
 def index(request):
-    return render(request, 'base.html')
+    return render(request, 'home.html')
 
 @login_required
 def logout_view(request):
