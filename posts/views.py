@@ -144,7 +144,8 @@ def create_post(request):
             post = Post(
                 title=title,
                 content=content,
-                publish_date=publish_date
+                publish_date=publish_date,
+                author=request.user
             )
             post.save()
 
