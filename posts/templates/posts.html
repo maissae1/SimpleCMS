@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Posts{% endblock %}
+
+{% block content %}
+<div class="position-absolute start-50 top-50 translate-middle" style="width: 800px">
+    <div class="bg-white p-5 rounded-3">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Content</th>
+                    <th>Publish Date</th>
+                    <th>Created Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for post in posts %}
+                <tr>
+                    <td>{{ post.id }}</td>
+                    <td>{{ post.title }}</td>
+                    <td>{{ post.content }}</td>
+                    <td>{{ post.publish_date }}</td>
+                    <td>{{ post.created_date }}</td>
+                    <td>
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'update-post' post.id %}"><i class="bi-pencil-fill text-primary"></i></a>
+                            <a href="{% url 'delete-post' post.id %}"><i class="bi-trash-fill text-danger"></i></a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="text-center">
+            <a class="btn btn-primary" href="{% url 'create-post' %}">New Post</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

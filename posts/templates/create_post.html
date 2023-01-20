@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Create Post{% endblock %}
+
+{% block content %}
+<div class="position-absolute start-50 top-50 translate-middle" style="width: 600px">
+    <form method="POST" class="bg-white p-5 rounded-3">
+        {% csrf_token %}
+        <div class="mb-3 {% if form.title.errors %}has-error{% endif %}">
+            <label class="form-label">{{ form.title.label }}</label>
+            {{ form.title }}
+            {% for error in form.title.errors %}
+                <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+        <div class="mb-3 {% if form.content.errors %}has-error{% endif %}">
+            <label class="form-label">{{ form.content.label }}</label>
+            {{ form.content }}
+            {% for error in form.content.errors %}
+                <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+        <div class="mb-3 {% if form.publish_date.errors %}has-error{% endif %}">
+            <label class="form-label">{{ form.publish_date.label }}</label>
+            {{ form.publish_date }}
+            {% for error in form.publish_date.errors %}
+                <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+            </div>
+            <button type="submit" class="btn btn-primary">Create</button>
+            <a class="btn btn-danger" href="{% url 'posts' %}">Cancel</a>
+    </form>
+</div>
+{% endblock %}
