@@ -8,8 +8,8 @@
             <thead>
                 <tr>
                     <th>#</th>
+                    <th>User</th>
                     <th>Title</th>
-                    <th>Content</th>
                     <th>Publish Date</th>
                     <th>Created Date</th>
                     <th>Actions</th>
@@ -19,8 +19,8 @@
                 {% for post in posts %}
                 <tr>
                     <td>{{ post.id }}</td>
+                    <td>{{ post.author_name }}</td>
                     <td>{{ post.title }}</td>
-                    <td>{{ post.content }}</td>
                     <td>{{ post.publish_date }}</td>
                     <td>{{ post.created_date }}</td>
                     <td>
