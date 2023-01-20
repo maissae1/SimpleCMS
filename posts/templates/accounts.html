@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Accounts{% endblock %}
+
+{% block content %}
+<div class="position-absolute start-50 top-50 translate-middle" style="width: 800px">
+    <div class="bg-white p-5 rounded-3">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for account in accounts %}
+                <tr>
+                    <td>{{ account.id }}</td>
+                    <td>{{ account.username }}</td>
+                    <td>{{ account.email }}</td>
+                    <td>{% if account.is_superuser %}Admin{% elif account.is_staff %}Editor{% else %}Author{% endif %}</td>
+                    <td>
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'update-account' account.id %}"><i class="bi-pencil-fill text-primary"></i></a>
+                            <a href="{% url 'delete-account' account.id %}"><i class="bi-trash-fill text-danger"></i></a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="text-center">
+            <a class="btn btn-primary" href="{% url 'create-account' %}">New Account</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

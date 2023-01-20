@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Account {{ account.id }}{% endblock %}
+
+{% block content %}
+<div class="position-absolute start-50 top-50 translate-middle" style="width: 600px">
+    <form method="POST" class="bg-white p-5 rounded-3">
+        {% csrf_token %}
+        <div class="mb-3 {% if form.username.errors %}has-error{% endif %}">
+            <label class="form-label">{{ form.username.label }}</label>
+            {{ form.username }}
+            {% for error in form.username.errors %}
+                <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+        <div class="mb-3 {% if form.email.errors %}has-error{% endif %}">
+            <label class="form-label">{{ form.email.label }}</label>
+            {{ form.email }}
+            {% for error in form.email.errors %}
+                <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+        <div class="mb-3 {% if form.password.errors %}has-error{% endif %}">
+            <label class="form-label">{{ form.password.label }}</label>
+            {{ form.password }}
+            {% for error in form.password.errors %}
+                <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+        <div class="mb-3 {% if form.confirm_password.errors %}has-error{% endif %}">
+            <label class="form-label">{{ form.confirm_password.label }}</label>
+            {{ form.confirm_password }}
+            {% for error in form.confirm_password.errors %}
+                <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+        <div class="mb-3 {% if form.role.errors %}has-error{% endif %}">
+            <label class="form-label">{{ form.role.label }}</label>
+            {{ form.role }}
+            {% for error in form.role.errors %}
+                <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+        <button type="submit" class="btn btn-primary">Create</button>
+        <a class="btn btn-danger" href="{% url 'accounts' %}">Cancel</a>
+    </form>
+</div>
+{% endblock %}
