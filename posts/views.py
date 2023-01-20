@@ -120,6 +120,64 @@ def delete_account(request, id):
     return redirect('accounts')
 
 
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from .models import Post
+from .forms import PostForm
+
+@login_required
+def posts(request):
+    posts = Post.objects.all()
+
+    return render(request, 'posts.html', {'posts': posts})
+
+@login_required
+def create_post(request):
+    if request.method == 'POST':
+        postForm = PostForm(request.POST)
+
+        if postForm.is_valid():
+            title = postForm.cleaned_data['title']
+            content = postForm.cleaned_data['content']
+            publish_date = postForm.cleaned_data['publish_date']
+
+            post = Post(
+                title=title,
+                content=content,
+                publish_date=publish_date
+            )
+            post.save()
+
+            return redirect('posts')
+    else:
+        postForm = PostForm()
+
+    return render(request, 'create_post.html', {'form': postForm})
+
+@login_required
+def update_post(request, id):
+    post = Post.objects.get(id=id)
+
+    if request.method == 'POST':
+        postForm = PostForm(request.POST, instance=post)
+
+        if postForm.is_valid():
+            postForm.save()
+            return redirect('posts')
+    else:
+        postForm = PostForm(instance=post)
+
+    return render(request, 'update_post.html', {'form': postForm})
+
+@login_required
+def delete_post(request, id):
+    post = Post.objects.get(id=id)
+    post.delete()
+
+    return redirect('posts')
+
+
+
 def login_view(request):
     if request.method == 'POST':
         loginForm = LoginForm(request.POST)
