@@ -24,10 +24,12 @@
                     <td>{{ post.publish_date }}</td>
                     <td>{{ post.created_date }}</td>
                     <td>
+                        {% if post.author == user or user.is_superuser %}
                         <div class="d-flex gap-2">
                             <a href="{% url 'update-post' post.id %}"><i class="bi-pencil-fill text-primary"></i></a>
                             <a href="{% url 'delete-post' post.id %}"><i class="bi-trash-fill text-danger"></i></a>
                         </div>
+                        {% endif %}
                     </td>
                 </tr>
                 {% endfor %}

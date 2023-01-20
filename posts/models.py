@@ -11,3 +11,6 @@ class Post(models.Model):
     @property
     def author_name(self):
         return self.author.username
+
+    def __str__(self):
+        return self.title

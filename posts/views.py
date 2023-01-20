@@ -1,19 +1,27 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
-from posts.forms import LoginForm, AccountForm
+from posts.forms import LoginForm, AccountForm, PostForm
+from posts.models import Post
 
 @login_required
 def index(request):
+    '''home page'''
+    
     return render(request, 'home.html')
 
 @login_required
 def logout_view(request):
+    '''logout user'''
+
     logout(request)
     return redirect('login')
 
 @login_required
 def accounts(request):
+    if not request.user.is_superuser:
+        return redirect('home')
+
     User = get_user_model()
     accounts = User.objects.all()
 
@@ -120,14 +128,13 @@ def delete_account(request, id):
     return redirect('accounts')
 
 
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from .models import Post
-from .forms import PostForm
-
 @login_required
 def posts(request):
-    posts = Post.objects.all()
+    if request.user.is_superuser or request.user.is_staff:
+        posts = Post.objects.all()
+
+    else:
+        posts = Post.objects.filter(author=request.user)
 
     return render(request, 'posts.html', {'posts': posts})
 
@@ -160,15 +167,22 @@ def update_post(request, id):
     post = Post.objects.get(id=id)
 
     if request.method == 'POST':
-        postForm = PostForm(request.POST, instance=post)
-
+        postForm = PostForm(request.POST)
         if postForm.is_valid():
-            postForm.save()
+            post.title = postForm.cleaned_data['title']
+            post.content = postForm.cleaned_data['content']
+            post.publish_date = postForm.cleaned_data['publish_date']
+            post.save()
             return redirect('posts')
     else:
-        postForm = PostForm(instance=post)
+        postForm = PostForm(initial={
+            'title': post.title,
+            'content': post.content,
+            'publish_date': post.publish_date,
+        })
 
     return render(request, 'update_post.html', {'form': postForm})
+
 
 @login_required
 def delete_post(request, id):

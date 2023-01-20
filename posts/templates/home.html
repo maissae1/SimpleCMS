@@ -4,7 +4,7 @@
 {% block content %}
 <div class="position-absolute start-50 top-50 translate-middle" style="width: 600px">
     <div class="bg-white p-5 rounded-3 text-center">
-        Welcome to the admin console!
+        Welcome to the {% if user.is_superuser %}admin{% elif user.is_staff %}editor{% else %}author{% endif %} console!
     </div>
 </div>
 {% endblock %}
