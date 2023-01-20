@@ -7,3 +7,7 @@ class Post(models.Model):
     publish_date = models.DateTimeField()
     created_date = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    @property
+    def author_name(self):
+        return self.author.username
