@@ -19,3 +19,10 @@ class AccountForm(forms.Form):
 
         if password != confirm_password:
             self.add_error('confirm_password', 'Passwords do not match')
+
+
+class PostForm(forms.Form):
+    title = forms.CharField(label='Title', widget=forms.TextInput(attrs={'class': "form-control"}))
+    content = forms.CharField(label='Content', widget=forms.Textarea(attrs={'class': "form-control"}))
+    publish_date = forms.DateField(label='Publish Date', widget=forms.DateInput(attrs={'class': "form-control"}))
+
